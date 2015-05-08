@@ -5,6 +5,7 @@ We will need a citylist.cpp and a citylist.h
 NEW CLASSES: CityList and CityNode
   CityNode contains City and CityNode*
   CityList will be a friend to the CityNode class (im not sure what it means to be a friend?)
+                **just learned what friend is. If classA is friend of classB, A can access B's private stuff**
   Add a copy constructor to City class for CityNode constructor to work
     remember to initialize!
   CityList contains CityNode* named head, CityNode* named tail, and an int named count
