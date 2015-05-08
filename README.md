@@ -1,5 +1,7 @@
 # P5 
 
+***This looks better when read in the edit menu***
+
 We will need a citylist.cpp and a citylist.h
 
 NEW CLASSES: CityList and CityNode
