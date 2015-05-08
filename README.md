@@ -37,3 +37,8 @@ NEW CLASSES: CityList and CityNode
     readCity to typical overloaded extraction operator with an istream ref and City ref as parameters
     calcDistance to overloaded minus operator.              change parameter from pointer to reference
     
+    
+    
+***I think the best way of going about this program is to just follow Sean's steps in how he wrote it***
+***Like start with CityList and CityNode classes, then go to Vector/main, then Add overloaded operators, etc***
+***This one hopefully won't take too long, but it's very prone to bugs so be careful! haha***
