@@ -1,0 +1,7 @@
+Creating Linked Lists:
+- Put ListNode and List classes in one cpp file.
+
+Friends:
+Options - You may friend classes and functions.
+- Ex1. friend class List; // Making Linked Lists
+- Ex2. friend ostream & operator<<(ostream &os, const Person &rhs) // Making Overloaded Operators
