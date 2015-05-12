@@ -1,3 +1,7 @@
+Help:
+- initializing char arrays
+
+Helpful:
 Creating Linked Lists:
 - Put ListNode and List classes in one cpp file.
 
@@ -5,3 +9,35 @@ Friends:
 Options - You may friend classes and functions.
 - Ex1. friend class List; // Making Linked Lists
 - Ex2. friend ostream & operator<<(ostream &os, const Person &rhs) // Making Overloaded Operators
+
+ifndef:
+- Used to define headerfiles
+- Ex.
+  #ifndef CITY_H
+    #define CITY_H
+  #include <>
+  #include ""
+  
+  class City
+  {
+  private:
+    .
+    .
+    .
+  public:
+    .
+    .
+    .
+  }; // class City
+  #endif // CITY_H
+
+Copy Constructor:
+- No return value.
+- If the right-hand side (rhs) exists, set the left equal to the right.
+
+Static Variables:
+- initialize in headerfile: static int count;
+- set outside of function in source file: int (class_name)::count = 0;
+
+Overloaded Operator:
+- (class_name)::ostream &operator+=(ostream &os, City &rhs);
