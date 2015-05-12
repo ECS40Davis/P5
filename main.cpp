@@ -5,9 +5,112 @@
 #include <cstring>
 #include <iomanip>
 #include <climits>
-#include "vector.h"
+#include <fstream>
+#include <cctype>
+#include "citylist.h"
+#include "city.h"
 #include "plane.h"
 using namespace std;
+
+void calcAirportTraffic(const CityList &cities, int index);
+void calcDistance(const CityList &cities, int index1, int index2, int *distance, 
+                          int *passengers, bool display);
+void cleanCities(CityList &cities);
+int findAirport(const CityList &cities, const char *airport);
+void readAirports(const CityList &cities);
+void readCities(const CityList &cities);
+
+
+void calcAirportTraffic(const CityList &cities, int index)
+{
+  int total = 0;
+  
+  for (int i = 0; i < CityList::getCount(); i++)
+    if (i != index)
+      total += cities[index].showTraffic(cities[i]);
+  
+  cout << "Total passengers: " << total << endl;
+}  // calcAirportTraffic()
+
+
+void calcDistance(const CityList &cities, int index1, int index2, int *distance, 
+                          int *passengers, bool display)
+{
+  cities[index1].calcDistance( &cities[index2], distance, passengers,
+    display);
+}  // calcDistance()
+
+void cleanCities(CityList &cities)
+{
+  int i = 0;
+  
+  while (i < CityList::getCount())
+  {
+    if (!cities[i].hasAirport())
+    {
+      cities -= cities[i];
+    }  // if city does not have an airport
+    else // city has an airport
+      i++;
+  }  // while more in array
+}  // cleanCities())
+
+
+int findAirport(const CityList &cities, const char *airport)
+{
+  City city;
+  
+  city.setAirport(airport);
+  
+  for (int i = 0; i < CityList::getCount(); i++)
+    if (cities[i].isEqual(&city))
+      return i;
+  
+  cout << airport << " is not a valid airport.\n";
+  return -1;
+}  // findAirport()
+
+void readAirports(const CityList &cities)
+{
+  char line[1000], state2[80];
+  City city;
+  ifstream inf("airportLL.txt");
+
+  while (inf.getline(line, 1000))
+  {
+    if (isalpha(line[0]))
+      strcpy(state2, strtok(line, "\n"));
+    
+    if (line[0] == '[')
+    {
+      city.readAirport(line, state2);
+      
+      for (int i = 0; i < CityList::getCount(); i++)
+        if (cities[i].isEqual(&city))
+        {
+          cities[i].copyLocation(&city);
+          break;
+        }  // if found a matching name
+      
+      city.deallocate();
+    }  // if an airport line
+  }  // while
+}  // readAirports()
+
+
+void readCities(CityList &cities)
+{
+  ifstream inf("citypopulations.csv");
+  
+  while(!inf.eof())
+  {
+    City temp_city;
+    temp_city.readCity(inf);
+    cities += temp_city;
+  } // while more in file
+  
+  inf.close();
+}  // readCities()
 
 
 void addPlaneInformation(Plane planes[], int *planeCount)
@@ -19,34 +122,34 @@ void addPlaneInformation(Plane planes[], int *planeCount)
 }  // addPlaneInformation()
 
 
-void calcDistance(const Vector *cities)
+void calcDistance(const CityList &cities)
 {
   char airport1[80], airport2[80];
   int index1, index2, distance, passengers;
   cout << "\nPlease enter two airport abbreviations (XXX XXX): ";
   cin >> airport1 >> airport2;
-  index1 = cities->findAirport(airport1);
-  index2 = cities->findAirport(airport2);
+  index1 = findAirport(cities, airport1);
+  index2 = findAirport(cities, airport2);
 
   if (index1 >= 0 && index2 >= 0)
-    cities->calcDistance(index1, index2, &distance, &passengers, true);
+    calcDistance(cities, index1, index2, &distance, &passengers, true);
 }  // calcDistance())
 
 
-void determineAirportTraffic(const Vector *cities)
+void determineAirportTraffic(const CityList &cities)
 {
   char airport[80];
   int index;
   cout << "\nPlease enter an airport abbreviation (XXX): ";
   cin >> airport;
-  index = cities->findAirport(airport);
+  index = findAirport(cities, airport);
 
   if (index >= 0 && index >= 0)
-    cities->calcAirportTraffic(index);
+    calcAirportTraffic(cities, index);
 }  // determinAirportTraffic()
 
 
-void determineBestPlane(const Vector *cities, const Plane *planes, 
+void determineBestPlane(const CityList &cities, const Plane *planes, 
                         int planeCount)
 {
   char airport1[80], airport2[80];
@@ -54,12 +157,12 @@ void determineBestPlane(const Vector *cities, const Plane *planes,
     minTrips, trips, cost;
   cout << "\nPlease enter two airport abbreviations (XXX XXX): ";
   cin >> airport1 >> airport2;
-  index1 = cities->findAirport(airport1);
-  index2 = cities->findAirport(airport2);
+  index1 = findAirport(cities, airport1);
+  index2 = findAirport(cities, airport2);
 
   if (index1 >= 0 && index2 >= 0)
   {
-    cities->calcDistance(index1, index2, &distance, &passengers, false);
+    calcDistance(cities, index1, index2, &distance, &passengers, false);
       
     for (int i = 0; i < planeCount; i++)
     {
@@ -139,12 +242,12 @@ void readPlanes(Plane planes[], int *planeCount)
 
 
 
-void run(const Vector *cities, Plane *planes, int planeCount)
+void run(const CityList &cities, Plane *planes, int planeCount)
 {
   int choice;
   
-//  for(index1 = 0; index1 < cities->count; index1++)
-//    for(index2 = index1 + 1; index2  < cities->count; index2++)
+//  for(index1 = 0; index1 < cities->CityList::getCount(); index1++)
+//    for(index2 = index1 + 1; index2  < cities->CityList::getCount(); index2++)
 //      calcDistance(cities, index1, index2);
 
   do
@@ -165,18 +268,19 @@ void run(const Vector *cities, Plane *planes, int planeCount)
 
 int main(int argc, char** argv) 
 {
-  Vector cities;
+  CityList cities;
   Plane planes[10];
   int planeCount = 0;
-  cities.readCities();
-  cities.readAirports();
-  cities.cleanCities();
+  readCities(cities);
+  readAirports(cities);
+  cleanCities(cities);
   readPlanes(planes, &planeCount);
  
 //  srand(1);
-//  for(int i = 0; i < cities.count; i++)
-//    cout << "1\n" << cities.cityArray[i].airport << ' ' << cities.cityArray[rand() % cities.count].airport << endl;
+//  for(int i = 0; i < cities.CityList::getCount(); i++)
+//    cout << "1\n" << cities.cityArray[i].airport << ' ' << cities.cityArray[rand() % cities.CityList::getCount()].airport << endl;
 //  printf("%s %s %lf %lf\n", cities.cityArray[i].name, cities.cityArray[i].airport, cities.cityArray[i].latitude, cities.cityArray[i].longitude);
-  run(&cities, planes, planeCount);
+  run(cities, planes, planeCount);
   return 0;
 } // main())
+
