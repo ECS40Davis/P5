@@ -15,6 +15,29 @@ City::City()
 }  // initialize()
 
 
+City::City(const City &rhs):longitude(rhs.longitude), latitude(rhs.latitude), \
+        name(NULL), state(NULL), population(rhs.population)
+{
+  if (rhs.name)
+  {
+    name = new char[strlen(rhs.name) + 1];
+    strcpy(name, rhs.name);
+  } // if name exists
+  
+  if (rhs.state)
+  {
+    state = new char[strlen(rhs.state) + 1];
+    strcpy(state, rhs.state);
+  } // if state exists
+  
+  if (rhs.airport)
+  {
+    strcpy(airport, rhs.airport);
+  } // if name exists
+  
+} // copy constructor
+
+
 City::~City()
 {
   if (name)
