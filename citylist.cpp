@@ -77,12 +77,20 @@ CityList& CityList::operator-= (const City &rhs)
 } // operator -= (remove)
 
 
-CityList& CityList::operator[] (int index)
+City& CityList::operator[] (int index)
 {
   CityNode *ptr = head;
   for (int i = 0; i < index; i++)
       ptr = ptr->next;
-  return *this;
+  return ptr->city;
+} // operator []
+
+City& CityList::operator[] (int index) const
+{
+  CityNode *ptr = head;
+  for (int i = 0; i < index; i++)
+      ptr = ptr->next;
+  return ptr->city;
 } // operator []
 
 
