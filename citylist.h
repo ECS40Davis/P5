@@ -15,7 +15,8 @@ public:
   static int getCount();  
   CityList& operator+= (const City &rhs);
   CityList& operator-= (const City &rhs);
-  CityList& operator[] (int index);
+  City& operator[] (int index);
+  City& operator[] (int index)const;
 }; // CityList
 
 
