@@ -97,26 +97,6 @@ bool City::hasAirport()
 }  // hasAirport()
 
 
-void City::readCity(ifstream &inf)
-{
-  char line[1000], *ptr;
-  
-  if (! inf.getline(line, 1000) || !strstr(line, ","))
-    return;
-  
-  ptr = strtok(line, ",");
-  
-  if (ptr)
-  {  
-    name = new char[strlen(ptr) + 1];
-    strcpy(name, ptr);
-    ptr = strtok(NULL, ",");
-    state = new char[strlen(ptr) + 1];
-    strcpy(state, ptr);
-    population = atoi(strtok(NULL, ",\n"));
-  } // if something on line
-}  // readCity()
-
 void City::readAirport(char *line, const char *state2)
 {
   char *ptr;
@@ -235,4 +215,4 @@ ifstream& operator >> (ifstream &is, City &city)
   } // if something on line
   
   return is;
-}  // readCity()
+}  // >>
