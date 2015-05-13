@@ -201,3 +201,15 @@ City& City::operator= (const City& rhs)
   population = rhs.population;
   return *this;
 }  // operator=
+
+
+ostream& operator << (ostream &os, const City &city)
+{
+  os << "Longitude: " << city.longitude << "\n"
+          << "Latitude: " << city.latitude << "\n"
+          << "Name: " << city.name << "\n"
+          << "State: " << city.state << "\n"
+          << "Airport: " << city.airport << "\n"
+          << "population: " << city.population << "\n\n";
+  return os;
+}  // operator<<
