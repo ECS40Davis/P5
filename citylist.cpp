@@ -57,7 +57,7 @@ CityList& CityList::operator+= (const City &rhs)
 CityList& CityList::operator-= (const City &rhs)
 {
     CityNode *ptr, *prev = NULL;
-    for (ptr = head; ptr && !(ptr->city.isEqual(&rhs)); ptr = ptr->next)
+    for (ptr = head; ptr && !(ptr->city == rhs); ptr = ptr->next)
     {
         prev = ptr;
     } // find city mentioned
