@@ -27,6 +27,7 @@ public:
   void setAirport(const char *airport);
   int showTraffic(const City &destCity) const;
   City& operator= (const City& rhs);
+  friend ostream& operator << (ostream &os, const City &city);
 
 };  // class City
 
