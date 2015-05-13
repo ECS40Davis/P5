@@ -14,7 +14,10 @@ int CityList::getCount()
 // ----------------------------
 // CityList Methods
 // ----------------------------
-CityList::CityList():head(NULL), tail(NULL) {} // default constructor
+CityList::CityList():head(NULL), tail(NULL) 
+{
+  count--;
+} // default constructor
 
 
 
@@ -33,16 +36,21 @@ CityList::~CityList()
 
 CityList& CityList::operator+= (const City &rhs)
 {
-  if (head == tail)
+  CityNode *ptr, *prev = NULL;
+  for (ptr = head; ptr; ptr = ptr->next)
+    prev = ptr;
+  if (!head) // If no elements in list.
   {
-    head = tail =  new CityNode(rhs, NULL);
+    head = tail =  new CityNode(rhs, NULL); // head and tail = first element
   } // if no elements in the list
   
   else // if there are at least 2 elements in the list
   {
-      tail = tail->next = new CityNode(rhs, NULL);
-  } // if there are at least 2 elements in the list
+      prev->next = new CityNode(rhs, NULL);
+      tail = prev->next;
+  } // if there are at least 1 elements in the list
 
+  count++;
   return *this;
 } // operator+= (insert)
 
@@ -70,6 +78,7 @@ CityList& CityList::operator-= (const City &rhs)
                 tail = prev;
         } // after the first node
         
+        count--;
         delete ptr;
     } // if city was found
     
@@ -101,6 +110,6 @@ CityNode::CityNode():next(NULL) {} // default constructor
 
 CityNode::CityNode(const City &c, CityNode *n)
 {
-    City city(c);
+    city = c;
     next = n;
 } // Standard constructor
