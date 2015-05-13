@@ -37,8 +37,10 @@ CityList::~CityList()
 CityList& CityList::operator+= (const City &rhs)
 {
   CityNode *ptr, *prev = NULL;
+  
   for (ptr = head; ptr; ptr = ptr->next)
     prev = ptr;
+  
   if (!head) // If no elements in list.
   {
     head = tail =  new CityNode(rhs, NULL); // head and tail = first element
@@ -57,6 +59,7 @@ CityList& CityList::operator+= (const City &rhs)
 CityList& CityList::operator-= (const City &rhs)
 {
     CityNode *ptr, *prev = NULL;
+    
     for (ptr = head; ptr && !(ptr->city == rhs); ptr = ptr->next)
     {
         prev = ptr;
@@ -64,9 +67,11 @@ CityList& CityList::operator-= (const City &rhs)
     
     if (ptr) // if we found the city
     {
+        
         if (!prev) // if the first node
         {
             head = ptr->next;
+            
             if (!head) // if list was only 1 long 
                 tail = NULL;
         } // if first node
@@ -74,6 +79,7 @@ CityList& CityList::operator-= (const City &rhs)
         else // after first node
         {
             prev->next = ptr->next;
+            
             if (!prev->next) // if the last node is going to be deleted
                 tail = prev;
         } // after the first node
