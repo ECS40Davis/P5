@@ -65,7 +65,7 @@ int findAirport(const CityList &cities, const char *airport)
   city.setAirport(airport);
   
   for (int i = 0; i < CityList::getCount(); i++)
-    if (cities[i].isEqual(&city))
+    if (cities[i] == city)
       return i;
   
   cout << airport << " is not a valid airport.\n";
@@ -88,7 +88,7 @@ void readAirports(const CityList &cities)
       city.readAirport(line, state2);
       
       for (int i = 0; i < CityList::getCount(); i++)
-        if (cities[i].isEqual(&city))
+        if (cities[i] == city)
         {
           cities[i].copyLocation(&city);
           break;
