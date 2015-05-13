@@ -22,7 +22,6 @@ public:
   void deallocate();
   bool hasAirport();
   void readAirport(char *line, const char *state2);
-  void readCity(ifstream &inf);
   void setAirport(const char *airport);
   int showTraffic(const City &destCity) const;
   City& operator= (const City &rhs);
