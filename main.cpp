@@ -53,6 +53,8 @@ void cleanCities(CityList &cities)
     else // city has an airport
       i++;
   }  // while more in array
+  
+//  cout << "Final Count: " << CityList::getCount() << endl;
 }  // cleanCities())
 
 
@@ -106,9 +108,11 @@ void readCities(CityList &cities)
   {
     City temp_city;
     temp_city.readCity(inf);
+//    cout << temp_city;
     cities += temp_city;
   } // while more in file
   
+//  cout << "Initial Count: " << CityList::getCount() << endl;
   inf.close();
 }  // readCities()
 
@@ -272,7 +276,11 @@ int main(int argc, char** argv)
   Plane planes[10];
   int planeCount = 0;
   readCities(cities);
+
+  
   readAirports(cities);
+  
+//  cout << cities[0] << cities[1];  
   cleanCities(cities);
   readPlanes(planes, &planeCount);
  
@@ -280,6 +288,7 @@ int main(int argc, char** argv)
 //  for(int i = 0; i < cities.CityList::getCount(); i++)
 //    cout << "1\n" << cities.cityArray[i].airport << ' ' << cities.cityArray[rand() % cities.CityList::getCount()].airport << endl;
 //  printf("%s %s %lf %lf\n", cities.cityArray[i].name, cities.cityArray[i].airport, cities.cityArray[i].latitude, cities.cityArray[i].longitude);
+
   run(cities, planes, planeCount);
   return 0;
 } // main())
