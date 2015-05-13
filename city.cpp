@@ -213,3 +213,26 @@ bool City::operator== (const City &rhs)
   
   return false;
 }  // isName()
+
+
+ifstream& operator >> (ifstream &is, City &city)
+{
+  char line[1000], *ptr;
+  
+  if (! is.getline(line, 1000) || !strstr(line, ","))
+    return is;
+  
+  ptr = strtok(line, ",");
+  
+  if (ptr)
+  {  
+    city.name = new char[strlen(ptr) + 1];
+    strcpy(city.name, ptr);
+    ptr = strtok(NULL, ",");
+    city.state = new char[strlen(ptr) + 1];
+    strcpy(city.state, ptr);
+    city.population = atoi(strtok(NULL, ",\n"));
+  } // if something on line
+  
+  return is;
+}  // readCity()
