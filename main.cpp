@@ -13,8 +13,8 @@
 using namespace std;
 
 void calcAirportTraffic(const CityList &cities, int index);
-void calcDistance(const CityList &cities, int index1, int index2, int *distance, 
-                          int *passengers, bool display);
+void calcDistance(const CityList &cities, int index1, int index2, 
+                  int *distance, int *passengers, bool display);
 void cleanCities(CityList &cities);
 int findAirport(const CityList &cities, const char *airport);
 void readAirports(const CityList &cities);
@@ -33,8 +33,8 @@ void calcAirportTraffic(const CityList &cities, int index)
 }  // calcAirportTraffic()
 
 
-void calcDistance(const CityList &cities, int index1, int index2, int *distance, 
-                          int *passengers, bool display)
+void calcDistance(const CityList &cities, int index1, int index2, 
+                  int *distance, int *passengers, bool display)
 {
   cities[index1].calcDistance( &cities[index2], distance, passengers,
     display);
@@ -107,7 +107,7 @@ void readCities(CityList &cities)
   while(!inf.eof())
   {
     City temp_city;
-    temp_city.readCity(inf);
+    inf >> temp_city;
 //    cout << temp_city;
     cities += temp_city;
   } // while more in file
