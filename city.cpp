@@ -97,19 +97,6 @@ bool City::hasAirport()
 }  // hasAirport()
 
 
-bool City::isEqual(const City *city2) const
-{
-  if (name && city2->name && state && city2->state)
-    return strcmp(name, city2->name) == 0 
-      && strcmp(state, city2->state) == 0;
-  
-  if (airport[0] && city2->airport[0])
-    return strcmp(airport, city2->airport) == 0;
-  
-  return false;
-}  // isName()
-
-
 void City::readCity(ifstream &inf)
 {
   char line[1000], *ptr;
@@ -169,7 +156,7 @@ int City::showTraffic(const City &destCity) const
   return passengers;
 }  // showTraffic())
 
-City& City::operator= (const City& rhs)
+City& City::operator= (const City &rhs)
 {
   if (&rhs == this)
     return *this;
@@ -213,3 +200,16 @@ ostream& operator << (ostream &os, const City &city)
           << "population: " << city.population << "\n\n";
   return os;
 }  // operator<<
+
+
+bool City::operator== (const City &rhs)
+{
+  if (name && rhs.name && state && rhs.state)
+    return strcmp(rhs.name, name) == 0 
+      && strcmp(rhs.state, state) == 0;
+  
+  if (airport[0] && rhs.airport[0])
+    return strcmp(airport, rhs.airport) == 0;
+  
+  return false;
+}  // isName()
