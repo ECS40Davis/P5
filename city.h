@@ -28,6 +28,7 @@ public:
   City& operator= (const City &rhs);
   bool operator== (const City &rhs);
   friend ostream& operator << (ostream &os, const City &city);
+  friend ifstream& operator >> (ifstream &is, City &city);
 
 };  // class City
 
